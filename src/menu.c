@@ -6,7 +6,53 @@ void mainMenu(){
 	menu.id = 0;
 	menu.scene = mainMenuScene;
 	menu.assets = mainMenuLoadAssets;
+	menu.initButton = initButton;
+	menu.btnNbr = 2;
+	menu.btntab = malloc(sizeof(Button) * menu.btnNbr);
+	menu.initButton(menu.btntab);
 	menu.astab = menu.assets();
+}
+
+void initButton(Button *btn){
+	Button btn1;
+	btn1.xpos = 290;
+	btn1.ypos = 230;
+	btn1.width = 220;
+	btn1.height = 80;
+	btn1.color = grey;
+	btn1.textSize = 50;
+	btn1.text = "JOUER";
+	btn1.textFont = TTF_OpenFont("src/font/arial.ttf", btn1.textSize);
+	btn1.textColor = white;
+	btn1.rect.x = btn1.xpos;
+	btn1.rect.y = btn1.ypos;
+	btn1.rect.w = btn1.width; 
+	btn1.rect.h = btn1.height; 
+	btn1.textrect.x = btn1.rect.x + 25;
+	btn1.textrect.y = btn1.rect.y + 10;
+	btn1.function = PlayBtnFunc;
+
+	*(btn) = btn1;
+
+	Button btn2;
+	btn2.xpos = 290;
+	btn2.ypos = 350;
+	btn2.width = 220;
+	btn2.height = 80;
+	btn2.color = grey;
+	btn2.textSize = 50;
+	btn2.text = "Quitter";
+	btn2.textFont = TTF_OpenFont("src/font/arial.ttf", btn2.textSize);
+	btn2.textColor = white;
+	btn2.rect.x = btn2.xpos;
+	btn2.rect.y = btn2.ypos;
+	btn2.rect.w = btn2.width; 
+	btn2.rect.h = btn2.height; 
+	btn2.textrect.x = btn2.rect.x + 30;
+	btn2.textrect.y = btn2.rect.y + 10;
+	btn2.function = QuitButtonFunc;
+
+	*(btn + 1) = btn2;
 }
 
 void mainMenuScene(){
@@ -17,61 +63,27 @@ void mainMenuScene(){
 	logoRect.w = menu.astab[0].width; 
 	logoRect.h = menu.astab[0].height; 
 
-	Button btn1;
-	btn1.xpos = 290;
-	btn1.ypos = 230;
-	btn1.width = 220;
-	btn1.height = 80;
-	btn1.color = red;
-	btn1.text = "JOUER";
-	btn1.rect.x = btn1.xpos;
-	btn1.rect.y = btn1.ypos;
-	btn1.rect.w = btn1.width; 
-	btn1.rect.h = btn1.height; 
+	for (int i = 0; i < menu.btnNbr; ++i){
 
-	Button btn2;
-	btn2.xpos = 290;
-	btn2.ypos = 350;
-	btn2.width = 220;
-	btn2.height = 80;
-	btn2.color = red;
-	btn2.text = "Quitter";
-	btn2.rect.x = btn2.xpos;
-	btn2.rect.y = btn2.ypos;
-	btn2.rect.w = btn2.width; 
-	btn2.rect.h = btn2.height; 
-	
+		Button *btn = &menu.btntab[i];
 
-	TTF_Font* arial = TTF_OpenFont("src/font/arial.ttf", 100); 
-
-	if (arial == NULL){
-		printf("Font Error %s \n", TTF_GetError());
+		if (btn -> textFont == NULL){
+			printf("Font Error %s \n", TTF_GetError());
+		}
+		prepareBtnRendering(btn);
 	}
 
-	SDL_Color White = {255, 255, 255};  
-	SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(arial, btn1.text, White); 
-	SDL_Texture* Message1 = SDL_CreateTextureFromSurface(app.renderer, surfaceMessage1);
-
-	SDL_Surface* surfaceMessage2 = TTF_RenderText_Solid(arial, btn2.text, White); 
-	SDL_Texture* Message2 = SDL_CreateTextureFromSurface(app.renderer, surfaceMessage2);
-
-	SDL_SetRenderDrawColor(app.renderer, blue.r, blue.g, blue.b, blue.o);
+	SDL_SetRenderDrawColor(app.renderer, blue.r, blue.g, blue.b, blue.a);
 	SDL_RenderClear(app.renderer);
 
-	SDL_SetRenderDrawColor(app.renderer, grey.r, grey.g, grey.b, grey.o);
-	SDL_RenderFillRect(app.renderer, &btn1.rect);
-	SDL_RenderFillRect(app.renderer, &btn2.rect);
+	for (int i = 0; i < menu.btnNbr; ++i){
 
-	SDL_RenderCopy(app.renderer, Message1, NULL, &btn1.rect);
-	SDL_RenderCopy(app.renderer, Message2, NULL, &btn2.rect);
+		Button *btn = &menu.btntab[i];
+		renderBtn(btn);
+	}
+
 	SDL_RenderCopy(app.renderer, menu.astab[0].img, NULL, &logoRect);
-
-	SDL_FreeSurface(surfaceMessage1);
-	SDL_DestroyTexture(Message1);
-	SDL_FreeSurface(surfaceMessage2);
-	SDL_DestroyTexture(Message2);
-	TTF_CloseFont(arial);
-	
+ 	
 }
 
 Image* mainMenuLoadAssets(){
@@ -88,4 +100,17 @@ Image* mainMenuLoadAssets(){
 
 	return tab;
 
+}
+
+
+void PlayBtnFunc(){
+	mainGame();
+	app.currentSCREEN = &levelSelection;
+}
+
+void QuitButtonFunc(){
+	SDL_Event event;
+	event.type =  SDL_QUIT;
+
+	SDL_PushEvent(&event);
 }

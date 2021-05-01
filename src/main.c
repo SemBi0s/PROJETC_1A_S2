@@ -6,7 +6,5 @@ int main(int argc, char const *argv[]){
 	
 	windowMain();
 	
-
-
 	return 0;
 }
