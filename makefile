@@ -30,6 +30,7 @@ all:
 
 
 $(OBJdir)/%.o : $(_SRCdir)/%.c $(INC)
+	@mkdir -p ./src/obj
 	$(CC) -c -o $@ $< $(FLAGS)
 
 build: $(OBJ) 
