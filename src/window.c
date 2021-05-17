@@ -1,42 +1,50 @@
 #include "include/libs.h"
 
+#ifndef FRAMERATE
+#define FRAMERATE 60
+#endif
 
 void windowMain(){
 	memset(&app, 0, sizeof(App));
 
 	windowConfig();
 	initSDL();
-
-	
-	int id = 0;
 	
 	mainMenu();
+	mainLevelSelector();
+	mainGame();
 	
 	while(true){
 		void (*prepareScene)();
 		doInput();
 
-		switch(id){
+		switch(app.currentSCREEN->id){
 			case 0:
-				
 				prepareScene = menu.scene;
 				break;
-			
+			case 1:
+				prepareScene = levelSelection.scene;
+				break;
+			case 2:
+				prepareScene = gameScreen.scene;
+				break;
 			default:
 				printf("error\n");
-				id = 0;
+				app.currentSCREEN->id = 0;
+				break;
 
 		}
-
 		prepareScene();
 		SDL_RenderPresent(app.renderer);
+		SDL_Delay(FRAMERATE);
 	}
 }
 
 void windowConfig(){
 	app.name = "My Window !!!";
-	app.SCREEN_WIDTH = 800;
-	app.SCREEN_HEIGHT = 600;
+	app.SCREEN_WIDTH = 900;
+	app.SCREEN_HEIGHT = 900;
+	app.currentSCREEN = &menu;
 }
 
 void initSDL(){
@@ -44,7 +52,7 @@ void initSDL(){
 
 	rendererFlags = SDL_RENDERER_ACCELERATED;
 
-	windowFlags = SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_RESIZABLE;
+	windowFlags = SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_BORDERLESS ;
 
 	imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
 
@@ -74,10 +82,13 @@ void initSDL(){
     if (TTF_Init() != 0){
     	printf("Couldn't init TTF %s\n", TTF_GetError());
     }
+
+   // app.currentSCREENid = 0;
 }
 
 void doInput(){
 	SDL_Event event;
+	int mouseX, mouseY;
 
 	while (SDL_PollEvent(&event)){
 		switch (event.type){
@@ -85,8 +96,48 @@ void doInput(){
 				exit(0);
 				break;
 
+			case SDL_MOUSEBUTTONDOWN:
+				SDL_GetMouseState(&mouseX,&mouseY);
+				if (app.currentSCREEN->id == 2){
+					if(mouseX > 0 && mouseY > 0 && mouseX < app.SCREEN_WIDTH && mouseY < app.SCREEN_HEIGHT){
+					caseClick( mouseX ,mouseY);
+					}
+				}else{
+					if(mouseX > 0 && mouseY > 0 && mouseX < app.SCREEN_WIDTH && mouseY < app.SCREEN_HEIGHT){
+					buttonClick(*app.currentSCREEN, mouseX ,mouseY);
+					}
+				}
+				
+				break;
+
+			case SDL_WINDOWEVENT:
+				switch(event.window.event){
+					case SDL_WINDOWEVENT_RESIZED:
+						SDL_GetRendererOutputSize(app.renderer, &app.SCREEN_WIDTH, &app.SCREEN_HEIGHT);
+						break;
+				}
+
 			default:
 				break;
 		}
 	}
+}
+
+void buttonClick(SCREEN screen, int x, int y){
+	void (*BTNFunc)();
+	for (int i = 0; i < screen.btnNbr; ++i){
+		if (x > screen.btntab[i].rect.x && y > screen.btntab[i].rect.y && x < (screen.btntab[i].rect.x + screen.btntab[i].width) && y < (screen.btntab[i].rect.y + screen.btntab[i].height) ){
+			BTNFunc = screen.btntab[i].function;
+			BTNFunc();
+		}
+	}
+}
+
+void caseClick(int x, int y){
+	for (int i = 0; i < game.difficulty.caseNbr; ++i){
+		if (x > game.tabCase[i].rect.x && y > game.tabCase[i].rect.y && x < (game.tabCase[i].rect.x + game.tabCase[i].width) && y < (game.tabCase[i].rect.y + game.tabCase[i].height) ){
+			 gameClick(i);
+		}
+	}
+	isSuccess();
 }

@@ -1,7 +1,9 @@
-extern COLOR red;
+extern SDL_Color red;
 
-extern COLOR blue;
+extern SDL_Color blue;
 
-extern COLOR grey;
+extern SDL_Color grey;
+
+extern SDL_Color white;
 
 
