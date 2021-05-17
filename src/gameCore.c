@@ -19,7 +19,7 @@ void initCase(CASE *tab, int size, char *name){
 		for (int y = 0; y < size/6; ++y){
 			for (int x = 0; x < size/6; ++x){
 				char path[50];
-				sprintf(path, "./src/img/%s/%d%d.jpg", name, x, y);
+				sprintf(path, "./src/img/%s/%d%d.jpg", name, y, x);
 				SDL_Texture *img = IMG_LoadTexture(app.renderer,path);
 				if(!img){
 					printf("IMG_Load: %s\n", IMG_GetError());
@@ -68,8 +68,8 @@ void gameFunction(){
 
 	}else if (game.difficulty.isExtreme){
 		do{
-			for (int i = 0; i < 200; ++i){
-				int casetoswap = rand() % 8;
+			for (int i = 0; i < 500; ++i){
+				int casetoswap = rand() % 35;
 				swapCase(currentNull, casetoswap);
 				printf("\n");
 			}
@@ -127,8 +127,12 @@ void gameClick(int i){
 		
 	}else if (game.difficulty.isExtreme){
 		CASE mycase = game.tabCase[i];
-		if (mycase.xpos == game.tabCase[8].xpos && mycase.ypos == game.tabCase[8].ypos ){
-			swapCase(8, mycase.id);
+		printf("%d\n",mycase.id );
+		if (mycase.xpos == game.tabCase[35].xpos+1 && mycase.ypos == game.tabCase[35].ypos || 
+			mycase.xpos == game.tabCase[35].xpos-1 && mycase.ypos == game.tabCase[35].ypos ||
+			mycase.ypos == game.tabCase[35].ypos+1 && mycase.xpos == game.tabCase[35].xpos ||
+			mycase.ypos == game.tabCase[35].ypos-1 && mycase.xpos == game.tabCase[35].xpos ){
+			swapCase(35, mycase.id);
 		}
 	}
 	
