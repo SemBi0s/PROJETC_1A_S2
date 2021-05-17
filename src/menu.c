@@ -15,9 +15,9 @@ void mainMenu(){
 
 void initButton(Button *btn){
 	Button btn1;
-	btn1.xpos = 290;
-	btn1.ypos = 230;
-	btn1.width = 220;
+	btn1.xpos = 300 ;
+	btn1.ypos = 420;
+	btn1.width = 300;
 	btn1.height = 80;
 	btn1.color = grey;
 	btn1.textSize = 50;
@@ -28,16 +28,16 @@ void initButton(Button *btn){
 	btn1.rect.y = btn1.ypos;
 	btn1.rect.w = btn1.width; 
 	btn1.rect.h = btn1.height; 
-	btn1.textrect.x = btn1.rect.x + 25;
+	btn1.textrect.x = btn1.rect.x + 65;
 	btn1.textrect.y = btn1.rect.y + 10;
 	btn1.function = PlayBtnFunc;
 
 	*(btn) = btn1;
 
 	Button btn2;
-	btn2.xpos = 290;
-	btn2.ypos = 350;
-	btn2.width = 220;
+	btn2.xpos = 300 ;
+	btn2.ypos = 540;
+	btn2.width = 300;
 	btn2.height = 80;
 	btn2.color = grey;
 	btn2.textSize = 50;
@@ -48,7 +48,7 @@ void initButton(Button *btn){
 	btn2.rect.y = btn2.ypos;
 	btn2.rect.w = btn2.width; 
 	btn2.rect.h = btn2.height; 
-	btn2.textrect.x = btn2.rect.x + 30;
+	btn2.textrect.x = btn2.rect.x + 70;
 	btn2.textrect.y = btn2.rect.y + 10;
 	btn2.function = QuitButtonFunc;
 
@@ -56,12 +56,12 @@ void initButton(Button *btn){
 }
 
 void mainMenuScene(){
-	SDL_QueryTexture(menu.astab[0].img, NULL, NULL, &menu.astab[0].width, &menu.astab[0].height);
+	SDL_QueryTexture(menu.astab[0].img, NULL, NULL, &menu.astab[0].width, &menu.astab[0].height); //TO CROP TO IMAGE
 	SDL_Rect logoRect; 
-	logoRect.x = 160; 
-	logoRect.y = 20; 
-	logoRect.w = menu.astab[0].width; 
-	logoRect.h = menu.astab[0].height; 
+	logoRect.x = app.SCREEN_WIDTH /9; 
+	logoRect.y = app.SCREEN_HEIGHT /6; 
+	logoRect.w = menu.astab[0].width * 1.5; 
+	logoRect.h = menu.astab[0].height * 1.5; 
 
 	for (int i = 0; i < menu.btnNbr; ++i){
 
@@ -91,8 +91,7 @@ Image* mainMenuLoadAssets(){
 	tab = malloc( 2 * sizeof(Image));
 
 	logo.img = IMG_LoadTexture(app.renderer,"src/img/logo.png");
-	logo.width = 470;
-	logo.height = 128;
+	
 	if(!logo.img){
 		printf("IMG_Load: %s\n", IMG_GetError());
 	}

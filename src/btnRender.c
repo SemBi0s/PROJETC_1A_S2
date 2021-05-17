@@ -6,7 +6,6 @@ void prepareBtnRendering(Button *btn){
 	btn->textTexture = Message;
 	SDL_QueryTexture(btn->textTexture, NULL, NULL, &btn->textrect.w, &btn->textrect.h);
 	SDL_FreeSurface(surfaceMessage);
-
 }
 
 void renderBtn(Button *btn){
