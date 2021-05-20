@@ -15,7 +15,6 @@ void mainGameScene(){
 	for (int i = 0; i < game.difficulty.caseNbr; ++i){
 		CASE *mycase = &game.tabCase[i];
 		
-		//SDL_QueryTexture(mycase->img, NULL, NULL, &mycase->width, &mycase->height);
 		if (game.difficulty.caseNbr > 9){
 			mycase->rect.x = (app.SCREEN_WIDTH / (game.difficulty.caseNbr/6) ) * mycase->xpos ; 
 			mycase->rect.y = (app.SCREEN_HEIGHT / (game.difficulty.caseNbr/6) ) * mycase->ypos ; 
