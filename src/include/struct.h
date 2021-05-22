@@ -42,9 +42,13 @@ typedef struct{
 	Image *astab;
 
 } SCREEN;
+
+
+
 extern SCREEN menu;
 extern SCREEN levelSelection;
 extern SCREEN gameScreen;
+extern SCREEN rule;
 
 typedef struct {
 	char *name;

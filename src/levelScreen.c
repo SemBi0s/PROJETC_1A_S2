@@ -157,6 +157,13 @@ void initLevelButton(Button *btn){
 }
 
 void mainLevelScene(){
+	SDL_QueryTexture(menu.astab[0].img, NULL, NULL, &menu.astab[0].width, &menu.astab[0].height); //TO CROP TO IMAGE
+	SDL_Rect logoRect2; 
+	logoRect2.x = 0; 
+	logoRect2.y = 0; 
+	logoRect2.w = 900; 
+	logoRect2.h = 900; 
+
 	for (int i = 0; i < levelSelection.btnNbr; ++i){
 
 		Button *btn = &levelSelection.btntab[i];
@@ -170,6 +177,8 @@ void mainLevelScene(){
 	SDL_SetRenderDrawColor(app.renderer, blue.r, blue.g, blue.b, blue.a);
 	SDL_RenderClear(app.renderer);
 
+	SDL_RenderCopy(app.renderer, menu.astab[1].img, NULL, &logoRect2);
+
 	for (int i = 0; i < levelSelection.btnNbr; ++i){
 
 		Button *btn = &levelSelection.btntab[i];
@@ -179,16 +188,17 @@ void mainLevelScene(){
 }
 
 Image* mainLevelLoadAssets(){
-	//Image *tab, logo;
-	//tab = malloc( 2 * sizeof(Image));
+	Image *tab, bg;
+	tab = malloc( 2 * sizeof(Image));
 
-	/*
-	*
-	* LOAD ASSETS HERE
-	*
-	*/
+	bg.img = IMG_LoadTexture(app.renderer,"src/img/Arriere_plan.png");
 	
-	//return tab;
+	if(!bg.img){
+		printf("IMG_Load: %s\n", IMG_GetError());
+	}
+	*(tab) = bg;
+
+	return tab;
 
 }
 

@@ -9,9 +9,6 @@ void mainGame(){
 
 void mainGameScene(){
 
-	
-
-
 	for (int i = 0; i < game.difficulty.caseNbr; ++i){
 		CASE *mycase = &game.tabCase[i];
 		
@@ -27,22 +24,12 @@ void mainGameScene(){
 
 	}
 
-	for (int i = 0; i < gameScreen.btnNbr; ++i){
-		Button *btn = &gameScreen.btntab[i];
-		prepareBtnRendering(btn);
-	}
-
 	SDL_SetRenderDrawColor(app.renderer, grey.r, grey.g, grey.b, grey.a);
 	SDL_RenderClear(app.renderer);
 
 	for (int i = 0; i < game.difficulty.caseNbr; ++i){
 		CASE *mycase = &game.tabCase[i];
 		SDL_RenderCopy(app.renderer, mycase->img, NULL, &mycase->rect);
-	}
-
-	for (int i = 0; i < gameScreen.btnNbr; ++i){
-		Button *btn = &gameScreen.btntab[i];
-		renderBtn(btn);
 	}
 
 }

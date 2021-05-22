@@ -134,7 +134,6 @@ void displaySuccess(){
 		}
 	}
 	SDL_Texture *img = IMG_LoadTexture(app.renderer,path);
-	//SDL_QueryTexture(img, NULL, NULL, &img->width, &img->height); //TO CROP TO IMAGE
 	SDL_Rect logoRect; 
 	logoRect.x = 0; 
 	logoRect.y = 0; 
@@ -160,9 +159,7 @@ void gameClick(int i){
 		}
 		
 	}else if (game.difficulty.isExtreme && game.difficulty.caseNbr == 36){
-		printf("%d\n", game.difficulty.caseNbr);
 		CASE mycase = game.tabCase[i];
-		printf("%d\n",mycase.id );
 		if (mycase.xpos == game.tabCase[35].xpos+1 && mycase.ypos == game.tabCase[35].ypos || 
 			mycase.xpos == game.tabCase[35].xpos-1 && mycase.ypos == game.tabCase[35].ypos ||
 			mycase.ypos == game.tabCase[35].ypos+1 && mycase.xpos == game.tabCase[35].xpos ||
@@ -170,9 +167,7 @@ void gameClick(int i){
 			swapCase(35, mycase.id);
 		}
 	}else if (game.difficulty.isExtreme && game.difficulty.caseNbr == 9){
-		//printf("%d\n", game.difficulty.caseNbr);
 		CASE mycase = game.tabCase[i];
-		//printf("%d\n",mycase.id );
 		if (mycase.xpos == game.tabCase[8].xpos+1 && mycase.ypos == game.tabCase[8].ypos || 
 			mycase.xpos == game.tabCase[8].xpos-1 && mycase.ypos == game.tabCase[8].ypos ||
 			mycase.ypos == game.tabCase[8].ypos+1 && mycase.xpos == game.tabCase[8].xpos ||
@@ -192,7 +187,6 @@ bool isSorted(){
 			}
 		}
 	}
-	//printf("%d\n",sortedLevel );  //THIS IS FOR DEBUGING
 	if (sortedLevel%2 == 0) return true;
 	else return false;
 }

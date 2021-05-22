@@ -23,6 +23,18 @@ void initButton(Button *btn);
 Image* mainMenuLoadAssets();
 void PlayBtnFunc();
 void QuitButtonFunc();
+void RuleBtnFunc();
+
+/*
+*
+* Rule Function prototype
+*
+*/
+void mainRule();
+void initRuleButton(Button *btn);
+void mainRuleScene();
+Image* mainRuleLoadAssets();
+void btnCloseFunc();
 
 /*
 *
@@ -65,8 +77,6 @@ void mainGame();
 void initGameButton(Button *btn);
 void mainGameScene();
 Image* mainGameLoadAssets();
-
-
 
 /*
 *

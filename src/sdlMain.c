@@ -18,21 +18,10 @@ void windowMain(){
 		void (*prepareScene)();
 		doInput();
 
-		switch(app.currentSCREEN->id){
-			case 0:
-				prepareScene = menu.scene;
-				break;
-			case 1:
-				prepareScene = levelSelection.scene;
-				break;
-			case 2:
-				prepareScene = gameScreen.scene;
-				break;
-			default:
-				printf("error\n");
-				app.currentSCREEN->id = 0;
-				break;
-
+		prepareScene = app.currentSCREEN -> scene;
+		if(!prepareScene){
+			app.currentSCREEN = &menu;
+			printf("error\n");
 		}
 		prepareScene();
 		SDL_RenderPresent(app.renderer);
