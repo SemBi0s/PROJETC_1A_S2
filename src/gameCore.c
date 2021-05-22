@@ -104,21 +104,49 @@ void isSuccess(){
 	for (int i = 0; i < game.difficulty.caseNbr; ++i){
 		if (game.tabCase[i].id == game.tabCase[i].place){
 			success++;
-			printf("%d\n",success );
+			//printf("%d\n",success ); //THIS IS FOR DEBUGGING
 		}
 	}
 	
 	if (success == 9 && game.difficulty.caseNbr == 9){
-		gameScreen.scene();
-		SDL_RenderPresent(app.renderer);
-		SDL_Delay(2000);
+		displaySuccess();
 		app.currentSCREEN = &menu;
+		SDL_Delay(1000);
 	}else if (success == 36 && game.difficulty.caseNbr == 36){
-		gameScreen.scene();
-		SDL_RenderPresent(app.renderer);
-		SDL_Delay(2000);
+		displaySuccess();
 		app.currentSCREEN = &menu;
+		SDL_Delay(1000);
 	}
+}
+
+void displaySuccess(){
+	
+	gameScreen.scene();
+	SDL_RenderPresent(app.renderer);
+	char path[50];
+	if (!game.isNumber){
+		sprintf(path, "./src/img/%s/full.jpg", game.difficulty.name);
+	}else if (game.isNumber){
+		if (game.difficulty.caseNbr > 9){
+		sprintf(path, "./src/img/%s/full.png", "number/extreme");
+		}else{
+			sprintf(path, "./src/img/%s/full.png", "number/normal");
+		}
+	}
+	SDL_Texture *img = IMG_LoadTexture(app.renderer,path);
+	//SDL_QueryTexture(img, NULL, NULL, &img->width, &img->height); //TO CROP TO IMAGE
+	SDL_Rect logoRect; 
+	logoRect.x = 0; 
+	logoRect.y = 0; 
+	logoRect.w = 900; 
+	logoRect.h = 900;
+	SDL_SetRenderDrawColor(app.renderer, grey.r, grey.g, grey.b, grey.a);
+	SDL_RenderClear(app.renderer);
+	SDL_RenderCopy(app.renderer, img, NULL, &logoRect);
+	SDL_Delay(1000);
+	SDL_RenderPresent(app.renderer);
+	SDL_Delay(3000);
+ 	 
 }
 
 void gameClick(int i){
@@ -142,9 +170,9 @@ void gameClick(int i){
 			swapCase(35, mycase.id);
 		}
 	}else if (game.difficulty.isExtreme && game.difficulty.caseNbr == 9){
-		printf("%d\n", game.difficulty.caseNbr);
+		//printf("%d\n", game.difficulty.caseNbr);
 		CASE mycase = game.tabCase[i];
-		printf("%d\n",mycase.id );
+		//printf("%d\n",mycase.id );
 		if (mycase.xpos == game.tabCase[8].xpos+1 && mycase.ypos == game.tabCase[8].ypos || 
 			mycase.xpos == game.tabCase[8].xpos-1 && mycase.ypos == game.tabCase[8].ypos ||
 			mycase.ypos == game.tabCase[8].ypos+1 && mycase.xpos == game.tabCase[8].xpos ||
@@ -164,7 +192,7 @@ bool isSorted(){
 			}
 		}
 	}
-	printf("%d\n",sortedLevel );
+	//printf("%d\n",sortedLevel );  //THIS IS FOR DEBUGING
 	if (sortedLevel%2 == 0) return true;
 	else return false;
 }
