@@ -51,6 +51,7 @@ void initCase(CASE *tab, int size, char *name);
 void gameFunction();
 void swapCase(int case1, int case2);
 void isSuccess();
+void displaySuccess();
 void gameClick(int i);
 bool isSorted();
 
