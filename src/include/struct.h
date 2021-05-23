@@ -54,7 +54,7 @@ typedef struct {
 	char *name;
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
-	SCREEN *currentSCREEN;
+	SCREEN *currentSCREEN;  //Actual screen of the application to render
 	SDL_Renderer *renderer;
 	SDL_Window *window;
 } App;

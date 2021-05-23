@@ -71,7 +71,7 @@ void initSDL(){
     if (TTF_Init() != 0){
     	printf("Couldn't init TTF %s\n", TTF_GetError());
     }
-
+    SDL_SetWindowIcon(app.window, IMG_Load("./src/img/icon.jpg"));
    // app.currentSCREENid = 0;
 }
 
